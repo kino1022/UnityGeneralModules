@@ -27,6 +27,10 @@ namespace GeneralModule.Correction.Manager {
         [OdinSerialize, LabelText("リスト生成クラス")]
         protected ICorrectionListFactory m_listFactory;
 
+        [TitleGroup("参照")]
+        [OdinSerialize, LabelText("プロパティプロバイダー")]
+        protected ICorrectionTypePropertyProvider m_propertyProvider;
+
         protected IObjectResolver m_resolver;
 
         [Inject]
@@ -76,7 +80,7 @@ namespace GeneralModule.Correction.Manager {
                 return value;
             }
 
-            var processTree = Lists.OrderBy(x => x.Type.Priority);
+            var processTree = Lists.OrderBy(x => m_propertyProvider.Provide(x.Type).Priority);
 
             var result = value;
 
