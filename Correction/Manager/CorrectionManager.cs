@@ -1,4 +1,4 @@
-﻿using GeneralModule.Correction.Definition.Type;
+using GeneralModule.Correction.Definition.Type;
 using GeneralModule.Correction.Definition.Type.Interface;
 using GeneralModule.Correction.Instance.Interface;
 using GeneralModule.Correction.List.Factory.Interface;
