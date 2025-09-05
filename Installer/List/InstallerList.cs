@@ -9,7 +9,7 @@ namespace GeneralModule.Installer.List {
 
     public class InstallerList :SerializedMonoBehaviour, IInstallerList {
 
-        [OdinSerialize, LabelText("インストーラー")]
+        [OdinSerialize, LabelText("繧､繝ｳ繧ｹ繝医�ｼ繝ｩ繝ｼ")]
         protected List<IInstaller> m_installers;
 
         public void Install(IContainerBuilder builder) {

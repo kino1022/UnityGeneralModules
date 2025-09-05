@@ -7,6 +7,7 @@ using Sirenix.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GeneralModule.Correction.Definition.Type;
 
 namespace GeneralModule.Correction.List {
     [Serializable]
@@ -14,19 +15,22 @@ namespace GeneralModule.Correction.List {
 
         [Title("データ")]
         [OdinSerialize, LabelText("管理している補正値の分類")]
-        protected ICorrectionType m_type;
+        protected CorrectionType m_type;
 
         [OdinSerialize, LabelText("管理している補正値")]
         protected List<ICorrectionInstance> m_corrections;
 
+        [Title("参照")] [OdinSerialize, LabelText("プロパティプロバイダ")]
+        protected ICorrectionTypePropertyProvider m_propertyProvider;
+        
         public IReadOnlyList<ICorrectionInstance> Corrections => m_corrections;
 
-        public ICorrectionType Type => m_type;
+        public CorrectionType Type => m_type;
 
-        public CorrectionList(ICorrectionType type) {
-            if (type is null) {
-                throw new ArgumentNullException("type");
-            }
+        public CorrectionList(CorrectionType type, ICorrectionTypePropertyProvider provider) {
+            m_type = type;
+
+            m_propertyProvider = provider ?? throw new ArgumentNullException();
         }
 
         public void Dispose () {
@@ -35,7 +39,7 @@ namespace GeneralModule.Correction.List {
 
         public void Add (ICorrectionInstance instance) {
 
-            if (instance is null || instance.Type is null) {
+            if (instance is null) {
                 throw new ArgumentNullException();
             }
 
@@ -50,7 +54,7 @@ namespace GeneralModule.Correction.List {
 
         public void Remove (ICorrectionInstance instance) {
 
-            if (instance is null || instance.Type is null) {
+            if (instance is null) {
                 throw new ArgumentNullException();
             }
 
@@ -69,7 +73,7 @@ namespace GeneralModule.Correction.List {
 
         public float Apply(float value) {
             RemoveNullInstance();
-            return Type.Apply(value, m_corrections);
+            return m_propertyProvider.Provide(m_type).Apply(value, m_corrections);
         }
 
         protected void RemoveNullInstance () {

@@ -1,5 +1,4 @@
 using GeneralModule.Correction.Definition.Type;
-using GeneralModule.Correction.Definition.Type.Interface;
 using GeneralModule.Correction.Instance.Interface;
 using System;
 
@@ -11,7 +10,7 @@ namespace GeneralModule.Correction.Instance {
 
         protected float m_value;
 
-        public CorrectionType@Type => m_type;
+        public CorrectionTypeã€€Type => m_type;
 
         public float Value => m_value;
 
