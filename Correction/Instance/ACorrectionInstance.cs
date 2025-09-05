@@ -15,11 +15,12 @@ namespace GeneralModule.Correction.Instance {
         public float Value => m_value;
 
         protected ACorrectionInstance(float value, CorrectionType type) {
-
+            m_value = value;
+            m_type = type;
         }
 
         public virtual void Dispose () {
-
+            
         }
     }
 }
