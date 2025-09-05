@@ -10,10 +10,13 @@ using Sirenix.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using VContainer;
 
 namespace GeneralModule.Correction.Manager {
+
     [Serializable]
     public class CorrectionManager : ICorrectionManager {
+
         [TitleGroup("補正値")]
         [OdinSerialize, LabelText("管理されている補正値")]
         protected List<ICorrectionList> m_lists;
@@ -24,8 +27,11 @@ namespace GeneralModule.Correction.Manager {
         [OdinSerialize, LabelText("リスト生成クラス")]
         protected ICorrectionListFactory m_listFactory;
 
-        public CorrectionManager() {
+        protected IObjectResolver m_resolver;
 
+        [Inject]
+        public CorrectionManager(IObjectResolver resolver) {
+            m_resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
         }
 
         public void Dispose () {
