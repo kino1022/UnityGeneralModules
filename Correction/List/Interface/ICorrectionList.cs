@@ -1,3 +1,4 @@
+using GeneralModule.Correction.Definition.Type;
 using GeneralModule.Correction.Definition.Type.Interface;
 using GeneralModule.Correction.Instance.Interface;
 using System;
@@ -9,7 +10,7 @@ namespace GeneralModule.Correction.List.Interface {
     /// </summary>
     public interface ICorrectionList : IDisposable {
 
-        ICorrectionType Type { get; }
+        CorrectionType Type { get; }
 
         IReadOnlyList<ICorrectionInstance> Corrections { get; }
 

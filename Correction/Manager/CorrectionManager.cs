@@ -1,4 +1,5 @@
-﻿using GeneralModule.Correction.Definition.Type.Interface;
+﻿using GeneralModule.Correction.Definition.Type;
+using GeneralModule.Correction.Definition.Type.Interface;
 using GeneralModule.Correction.Instance.Interface;
 using GeneralModule.Correction.List.Factory.Interface;
 using GeneralModule.Correction.List.Interface;
@@ -35,7 +36,7 @@ namespace GeneralModule.Correction.Manager {
 
         public void Add (ICorrectionInstance instance) {
 
-            if (instance is null || instance.Type is null) {
+            if (instance is null) {
                 throw new ArgumentNullException(nameof(instance));
             }
 
@@ -50,11 +51,11 @@ namespace GeneralModule.Correction.Manager {
 
         public void Remove (ICorrectionInstance instance) {
 
-            if (instance is null || instance.Type is null) {
+            if (instance is null) {
                 throw new ArgumentNullException(nameof(instance));
             }
 
-            var list = Lists.First(x => x.Type.GetType() == instance.Type.GetType());
+            var list = Lists.First(x => x.Type == instance.Type);
 
             if (list is null) {
                 throw new NullReferenceException();
@@ -78,14 +79,11 @@ namespace GeneralModule.Correction.Manager {
             return result;
         }
 
-        protected ICorrectionList GetListFromType (ICorrectionType type) {
-            return Lists.First(x => x.Type.GetType() == type.GetType());
+        protected ICorrectionList GetListFromType (CorrectionType type) {
+            return Lists.First(x => x.Type == type);
         }
 
-        protected ICorrectionList CreateNewList (ICorrectionType type) {
-            if (type is null) {
-                throw new ArgumentNullException (nameof(type));
-            }
+        protected ICorrectionList CreateNewList (CorrectionType type) {
 
             return m_listFactory.Create(type);
         }

@@ -1,3 +1,4 @@
+using GeneralModule.Correction.Definition.Type;
 using GeneralModule.Correction.Definition.Type.Interface;
 using System;
 
@@ -9,7 +10,7 @@ namespace GeneralModule.Correction.Instance.Interface {
 
         float Value { get; }
 
-        ICorrectionType Type { get; }
+        CorrectionType Type { get; }
 
     }
 }
