@@ -6,7 +6,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace UnityGeneralModules.Scope {
+namespace GeneralModuleS.Scope {
     
     public class ListableLifetimeScope : LifetimeScope {
 
