@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 
 namespace GeneralModule.Lottery.Table {
-    public abstract class ALotteryTable<Type> : SerializedScriptableObject, ILotteryTable<Type> {
+    public abstract class ALotteryTableScriptableObject<Type> : SerializedScriptableObject, ILotteryTable<Type> {
 
         [OdinSerialize, LabelText("抽選テーブル")]
         protected List<ILotteryCell<Type>> m_cells = new();
@@ -24,6 +24,21 @@ namespace GeneralModule.Lottery.Table {
         }
         
         #endif
+
+        public Type Lottery() {
+            float random = UnityEngine.Random.Range(0.0f, 100.0f);
+
+            float probability = 0.0f;
+
+            foreach (var cell in Table) {
+                probability += cell.Rate;
+                if (random < probability) {
+                    return cell.Item;
+                }
+            }
+
+            return Table[Table.Count - 1].Item;
+        }
 
         public void SetCell(ILotteryCell<Type> cell) {
 

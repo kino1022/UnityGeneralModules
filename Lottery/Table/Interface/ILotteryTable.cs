@@ -6,6 +6,12 @@ namespace GeneralModule.Lottery.Table.Interface {
         
         List<ILotteryCell<Type>> Table { get; }
 
+        /// <summary>
+        /// 抽選を行うメソッド
+        /// </summary>
+        /// <returns></returns>
+        Type Lottery();
+
         void SetCell(ILotteryCell<Type> cell);
     }
 }
