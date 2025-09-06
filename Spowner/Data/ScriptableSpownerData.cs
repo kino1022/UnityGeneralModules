@@ -8,7 +8,7 @@ using Sirenix.Serialization;
 using UnityEngine;
 
 namespace GeneralModule.Spowner.Data {
-    [CreateAssetMenu(menuName = "GeneralModule/Spowner/SpownData")]
+    [CreateAssetMenu(menuName = "GeneralModule/Spowner/SpownData/Normal")]
     public class ScriptableSpownerData : SerializedScriptableObject , ISpownerData {
 
         [SerializeField]
