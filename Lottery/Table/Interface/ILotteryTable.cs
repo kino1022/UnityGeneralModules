@@ -11,7 +11,5 @@ namespace GeneralModule.Lottery.Table.Interface {
         /// </summary>
         /// <returns></returns>
         Type Lottery();
-
-        void SetCell(ILotteryCell<Type> cell);
     }
 }
