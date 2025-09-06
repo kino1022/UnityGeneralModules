@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GeneralModule.Correction.Definition.Type;
+using ObservableCollections;
 
 namespace GeneralModule.Correction.List {
     [Serializable]
@@ -18,7 +19,7 @@ namespace GeneralModule.Correction.List {
         protected CorrectionType m_type;
 
         [OdinSerialize, LabelText("管理している補正値")]
-        protected List<ICorrectionInstance> m_corrections;
+        protected ObservableList<ICorrectionInstance> m_corrections;
 
         [Title("参照")] [OdinSerialize, LabelText("プロパティプロバイダ")]
         protected ICorrectionTypePropertyProvider m_propertyProvider;
@@ -73,11 +74,13 @@ namespace GeneralModule.Correction.List {
 
         public float Apply(float value) {
             RemoveNullInstance();
-            return m_propertyProvider.Provide(m_type).Apply(value, m_corrections);
+            return m_propertyProvider.Provide(m_type).Apply(value, m_corrections.ToList());
         }
 
         protected void RemoveNullInstance () {
-            m_corrections.RemoveAll(x => x is null);
+            m_corrections.ForEach(x => {
+                if (x is null) m_corrections.Remove(x);
+            });
         }
     }
 }

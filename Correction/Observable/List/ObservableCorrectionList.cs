@@ -5,12 +5,11 @@ using GeneralModule.Correction.List;
 using GeneralModule.Correction.Observable.List.Interface;
 using ObservableCollections;
 using System;
+using R3;
 
 namespace GeneralModule.Correction.Observable.List {
     [Serializable]
     public class ObservableCorrectionList : CorrectionList , IObservableCorrectionList {
-
-        
 
         public Action CorrectionChangeEvent { get; set; }
 
@@ -19,7 +18,10 @@ namespace GeneralModule.Correction.Observable.List {
         }
         
         public void RegisterCorrections() {
-            
+            m_corrections
+                .ObserveChanged()
+                .Subscribe(x => CorrectionChangeEvent?.Invoke())
+                .Dispose();
         }
     }
 }
