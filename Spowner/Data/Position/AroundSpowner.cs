@@ -1,14 +1,14 @@
-using GeneralModule.Spowner.Data.Position.Interface;
 using Sirenix.OdinInspector;
 using System;
+using GeneralModule.Spawner.Data.Position.Interface;
 using UnityEngine;
 
-namespace GeneralModule.Spowner.Data.Position {
+namespace GeneralModule.Spawner.Data.Position {
     /// <summary>
     /// スポナーを中心とした円形範囲にスポーンさせる際のISpownPosition
     /// </summary>
     [Serializable, LabelText("スポーン位置：円形範囲")]
-    public class AroundSpowner : ISpownPosition {
+    public class AroundSpawner : ISpawnPosition {
 
         [SerializeField, LabelText("半径"),ProgressBar(0.0f,500.0f)]
         protected float m_radius = 1.0f;

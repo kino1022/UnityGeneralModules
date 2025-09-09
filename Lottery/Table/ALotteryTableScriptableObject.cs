@@ -5,6 +5,7 @@ using GeneralModule.Lottery.Table.Cell.Interface;
 using GeneralModule.Lottery.Table.Interface;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using UnityEngine;
 
 namespace GeneralModule.Lottery.Table {
     public abstract class ALotteryTableScriptableObject<Type> : SerializedScriptableObject, ILotteryTable<Type> {
@@ -17,8 +18,12 @@ namespace GeneralModule.Lottery.Table {
         #if UNITY_EDITOR
         private int currentLength = 0;
 
+        [SerializeField]
+        [LabelText("確率の自動正規化")]
+        protected bool m_autoNormalize = true;
+
         private void OnValidate() {
-            if (m_cells.Count != currentLength) {
+            if (m_cells.Count != currentLength && m_autoNormalize) {
                 NormalizeRate();
             }
         }
@@ -50,6 +55,7 @@ namespace GeneralModule.Lottery.Table {
             NormalizeRate();
         }
         
+        [Button("確率の正規化")]
         protected void NormalizeRate() {
             var totalRatio = CalculateTotalRate();
             

@@ -31,6 +31,7 @@ namespace GeneralModule.Lottery.Table {
             return Table[Table.Count - 1].Item;
         }
 
+        [Button("確率の正規化")]
         protected void NormalizeRate() {
             var totalRatio = CalculateTotalRate();
 

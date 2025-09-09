@@ -1,20 +1,20 @@
-using GeneralModule.Spowner.Data.Position.Interface;
-using GeneralModule.Spowner.Data.Rotation.Interface;
+using GeneralModule.Spawner.Data.Position.Interface;
+using GeneralModule.Spawner.Data.Rotation.Interface;
 using GeneralModule.Symbol;
 using GeneralModule.Symbol.Interface;
 using UnityEngine;
 
-namespace GeneralModule.Spowner.Data.Interface {
+namespace GeneralModule.Spawner.Data.Interface {
     /// <summary>
-    /// ISpownerCore.Spown‚ÅƒXƒ|[ƒ“‚³‚¹‚éÛ‚Ì“à—e‚ğŠÇ—‚·‚éƒNƒ‰ƒX‚É‘Î‚µ‚Ä–ñ‘©‚·‚éƒCƒ“ƒ^[ƒtƒF[ƒX
+    /// ISpownerCore.Spownï¿½ÅƒXï¿½|ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û‚Ì“ï¿½ï¿½eï¿½ï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Xï¿½É‘Î‚ï¿½ï¿½Ä–ñ‘©‚ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½X
     /// </summary>
-    public interface ISpownerData {
+    public interface ISpawnerData {
 
         ASerializedSymbol Prefab { get; }
 
-        ISpownPosition Position { get; }
+        ISpawnPosition Position { get; }
 
-        ISpownRotation Rotation { get; }
+        ISpawnRotation Rotation { get; }
 
     }
 }

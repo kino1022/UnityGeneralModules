@@ -1,29 +1,29 @@
 using GeneralModule.Lottery.Table.Interface;
-using GeneralModule.Spowner.Data.Interface;
-using GeneralModule.Spowner.Data.Position.Interface;
-using GeneralModule.Spowner.Data.Rotation.Interface;
+using GeneralModule.Spawner.Data.Interface;
+using GeneralModule.Spawner.Data.Position.Interface;
+using GeneralModule.Spawner.Data.Rotation.Interface;
 using GeneralModule.Symbol;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 
-namespace GeneralModule.Spowner.Data {
-    [CreateAssetMenu(menuName = "GeneralModule/Spowner/SpownData/Table")]
-    public class TableSpownData : SerializedScriptableObject, ISpownerData {
+namespace GeneralModule.Spawner.Data {
+    [CreateAssetMenu(menuName = "GeneralModule/Spawner/SpawnData/Table")]
+    public class TableSpawnData : SerializedScriptableObject, ISpawnerData {
 
         [OdinSerialize, LabelText("スポーンテーブル")]
         protected ILotteryTable<ASerializedSymbol> m_table;
 
         [OdinSerialize,LabelText("")]
-        protected ISpownPosition m_pos;
+        protected ISpawnPosition m_pos;
 
         [OdinSerialize, LabelText("")]
-        protected ISpownRotation m_rot;
+        protected ISpawnRotation m_rot;
 
         public ASerializedSymbol Prefab => m_table.Lottery();
 
-        public ISpownPosition Position => m_pos;
+        public ISpawnPosition Position => m_pos;
 
-        public ISpownRotation Rotation => m_rot;
+        public ISpawnRotation Rotation => m_rot;
     }
 }

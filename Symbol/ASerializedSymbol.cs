@@ -6,6 +6,6 @@ namespace GeneralModule.Symbol {
     /// ISymbolをPrefabデータとして扱うために用いるコンポーネントの基底クラス
     /// </summary>
     public abstract class ASerializedSymbol : SerializedMonoBehaviour, ISymbol {
-
+        
     }
 }
