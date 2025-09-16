@@ -16,6 +16,7 @@ namespace GeneralModule.Lottery.Table {
         public List<ILotteryCell<Type>> Table => m_cells;
         
         #if UNITY_EDITOR
+        
         private int currentLength = 0;
 
         [SerializeField]

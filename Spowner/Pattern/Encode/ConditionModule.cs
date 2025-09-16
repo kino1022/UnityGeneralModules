@@ -8,7 +8,7 @@ namespace GeneralModule.Spawner.Pattern.Encode {
     public static class ConditionModule {
         
         public static bool TargetInRange(List<System.Type> components, Vector3 pos, float range) {
-            Collider[] objs = Physics.OverlapSphere(pos, range);
+            UnityEngine.Collider[] objs = Physics.OverlapSphere(pos, range);
 
             foreach (var obj in objs) {
                 foreach (var com in components) {
