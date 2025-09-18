@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using VContainer;
 
 namespace UnityGeneralModules.Status {
-    public class AStatus<Type> : SerializedMonoBehaviour , IStatus<Type> {
+    public abstract class AStatus<Type> : SerializedMonoBehaviour , IStatus<Type> {
 
         protected IValueModule<Type> m_rawValue;
         

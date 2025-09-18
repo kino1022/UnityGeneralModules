@@ -4,7 +4,7 @@ using GeneralModule.Status.Value.Interface;
 
 namespace GeneralModule.Status.Value {
     [Serializable]
-    public class AValueModule<Type> : IValueModule<Type> {
+    public abstract class AValueModule<Type> : IValueModule<Type> {
 
         protected Type m_value;
         
