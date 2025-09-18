@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace GeneralModule.Correction.Manager.Interface {
     /// <summary>
-    /// ‚ ‚é—v‘f‚É‚©‚©‚é•â³’l‚ğŠÇ—‚·‚éƒNƒ‰ƒX‚É‘Î‚µ‚Ä–ñ‘©‚·‚éƒCƒ“ƒ^[ƒtƒF[ƒX
+    /// ï¿½ï¿½ï¿½ï¿½vï¿½fï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½â³ï¿½lï¿½ï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Xï¿½É‘Î‚ï¿½ï¿½Ä–ñ‘©‚ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½X
     /// </summary>
     public interface ICorrectionManager : IDisposable {
         
-        IReadOnlyList<ICorrectionList> Lists { get; }
+        IReadOnlyList<ICorrectionInstance> Corrections { get; }
 
         void Add(ICorrectionInstance instance);
 

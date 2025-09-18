@@ -18,9 +18,10 @@ namespace GeneralModule.Installer {
 
         [OdinSerialize, LabelText("タイムカウンター")] 
         protected ITimeCounter m_timeCounter;
+        
 
         public void Install(IContainerBuilder builder) {
-            
+
         }
     }
 }

@@ -10,7 +10,7 @@ using UnityEngine;
 namespace GeneralModule.Lottery.Table {
     public abstract class ALotteryTableScriptableObject<Type> : SerializedScriptableObject, ILotteryTable<Type> {
 
-        [OdinSerialize, LabelText("抽選テーブル")]
+        [OdinSerialize, LabelText("抽選テーブル"), TableList]
         protected List<ILotteryCell<Type>> m_cells = new();
         
         public List<ILotteryCell<Type>> Table => m_cells;
