@@ -1,101 +1,81 @@
-using GeneralModule.Correction.Definition.Type;
-using GeneralModule.Correction.Definition.Type.Interface;
+using System;
 using GeneralModule.Correction.Instance.Interface;
-using GeneralModule.Correction.List.Factory.Interface;
-using GeneralModule.Correction.List.Interface;
 using GeneralModule.Correction.Manager.Interface;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using Sirenix.Utilities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using GeneralModule.Correction.Applier.Interface;
+using GeneralModule.Correction.Interface;
 using VContainer;
 
 namespace GeneralModule.Correction.Manager {
-
     [Serializable]
-    public class CorrectionManager : ICorrectionManager {
-
-        [TitleGroup("補正値")]
-        [OdinSerialize, LabelText("管理されている補正値")]
-        protected List<ICorrectionList> m_lists;
-
-        public IReadOnlyList<ICorrectionList> Lists => m_lists;
-
-        [TitleGroup("参照")]
-        [OdinSerialize, LabelText("リスト生成クラス")]
-        protected ICorrectionListFactory m_listFactory;
+    [LabelText("補正値管理クラス")]
+    public class CorrectionManager : ICorrectionManager , IReApplyHandler {
+        
+        [OdinSerialize]
+        [LabelText("補正値")]
+        protected List<ICorrectionInstance> m_corrections;
 
         [TitleGroup("参照")]
-        [OdinSerialize, LabelText("プロパティプロバイダー")]
-        protected ICorrectionTypePropertyProvider m_propertyProvider;
-
-        protected IObjectResolver m_resolver;
-
+        [OdinSerialize] [LabelText("補正値適用クラス")] [ReadOnly]
+        protected ICorrectionApplyModule m_applier;
+        
         [Inject]
-        public CorrectionManager(IObjectResolver resolver) {
-            m_resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
+        protected IObjectResolver m_resolver;
+        
+        public IReadOnlyList<ICorrectionInstance> Corrections => m_corrections;
+
+        public Action ReapplyEvent { get; set; }
+
+        public void Start() {
+            
+            m_applier = m_resolver.Resolve<ICorrectionApplyModule>();
+            
         }
 
-        public void Dispose () {
-            ///管理下のリストの終了処理
-            Lists.ForEach(list => list.Dispose());
-            Lists.ForEach(list => list = null);
+        public void Dispose() {
+            m_corrections.ForEach(x => {
+                
+                if (x is IReApplyHandler handler) {
+                    UnregisterCallBack(handler);
+                }
+
+                x.Dispose();
+                x = null;
+            });
         }
-
-        public void Add (ICorrectionInstance instance) {
-
-            if (instance is null) {
-                throw new ArgumentNullException(nameof(instance));
+        
+        public void Add(ICorrectionInstance correction) {
+            if (correction is null) {
+                throw new ArgumentNullException(nameof(correction));
             }
+            
+            m_corrections.Add(correction);
 
-            var list = Lists.First(x => x.Type.GetType() == instance.Type.GetType());
-
-            if (list is null) {
-                list = CreateNewList(instance.Type);
+            if (correction is IReApplyHandler handler) {
+                RegisterCallBack(handler);
             }
-
-            list.Add(instance);
+            
+            OnReapply();
         }
 
-        public void Remove (ICorrectionInstance instance) {
-
-            if (instance is null) {
-                throw new ArgumentNullException(nameof(instance));
-            }
-
-            var list = Lists.First(x => x.Type == instance.Type);
-
-            if (list is null) {
-                throw new NullReferenceException();
-            }
-
-            list.Remove(instance);
+        public void Remove(ICorrectionInstance correction) {
+            
         }
 
-        public float Apply (float value) {
+        public float Apply(float value) => m_applier.Apply(value, m_corrections);
 
-            if (Lists.Count is 0) {
-                return value;
-            }
-
-            var processTree = Lists.OrderBy(x => m_propertyProvider.Provide(x.Type).Priority);
-
-            var result = value;
-
-            processTree.ForEach(x => value = x.Apply(value));
-
-            return result;
+        protected void RegisterCallBack(IReApplyHandler handler) {
+            ReapplyEvent += handler.ReapplyEvent;
         }
 
-        protected ICorrectionList GetListFromType (CorrectionType type) {
-            return Lists.First(x => x.Type == type);
+        protected void UnregisterCallBack(IReApplyHandler handler) {
+            ReapplyEvent -= handler.ReapplyEvent;
         }
 
-        protected ICorrectionList CreateNewList (CorrectionType type) {
-
-            return m_listFactory.Create(type);
+        protected void OnReapply() {
+            ReapplyEvent?.Invoke();
         }
     }
 }

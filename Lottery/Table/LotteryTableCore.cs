@@ -11,7 +11,7 @@ namespace GeneralModule.Lottery.Table {
     [Serializable]
     public class LotteryTableCore<Type> : ILotteryTable<Type> {
 
-        [OdinSerialize, LabelText("抽選テーブル")]
+        [OdinSerialize, LabelText("抽選テーブル"), TableList]
         protected List<ILotteryCell<Type>> m_table = new();
 
         public List<ILotteryCell<Type>> Table => m_table;
