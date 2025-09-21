@@ -3,9 +3,10 @@ using GeneralModule.Status.Interface;
 using GeneralModule.Status.Value.Interface;
 using System.Collections;
 using UnityEngine;
-using UnityGeneralModules.Status;
+using GeneralModule.Status;
+using VContainer;
 
-namespace Assets.UnityGeneralModules.Status {
+namespace GeneralModule.Status {
     public abstract class ACorrectableStatus<Type> : AStatus<Type> , ICorrectableStatus<Type> {
 
         protected IValueModule<Type> m_correctedValue;
@@ -14,19 +15,17 @@ namespace Assets.UnityGeneralModules.Status {
 
         public IValueModule<Type> CorrectedValue => m_correctedValue;
 
-        public ICorrectionManager Correction => m_corrector;
+        public ICorrectionManager Corrector => m_corrector;
 
-
-        // Use this for initialization
-        void Start() {
-
+        public override void Start() {
+            
+            base.Start();
+            
+            m_correctedValue = m_resolver.Resolve<IValueModule<Type>>();
+            
+            m_corrector = m_resolver.Resolve<ICorrectionManager>();
         }
-
-        // Update is called once per frame
-        void Update() {
-
-        }
-
+        
         protected void ApplyCorrection () {
 
             dynamic value = m_rawValue.Value;

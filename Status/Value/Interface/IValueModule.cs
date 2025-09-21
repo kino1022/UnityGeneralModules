@@ -9,9 +9,5 @@ namespace GeneralModule.Status.Value.Interface {
         
         void Set (Type value);
         
-        void Increase (Type value);
-        
-        void Decrease (Type value);
-        
     }
 }

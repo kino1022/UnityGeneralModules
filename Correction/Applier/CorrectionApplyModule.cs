@@ -18,12 +18,9 @@ namespace GeneralModule.Correction.Applier {
         [TitleGroup("参照")]
         [LabelText("プロパティ供給クラス")]
         [ReadOnly]
+        [Inject]
         protected ICorrectionTypePropertyProvider m_propertyProvider;
         
-        [Inject]
-        public CorrectionApplyModule(IObjectResolver resolver) {
-            m_propertyProvider = resolver.Resolve<ICorrectionTypePropertyProvider>();
-        }
 
         public float Apply(float value, List<ICorrectionInstance> corrections) {
 

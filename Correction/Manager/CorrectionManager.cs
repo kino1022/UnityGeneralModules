@@ -21,17 +21,17 @@ namespace GeneralModule.Correction.Manager {
         [OdinSerialize] [LabelText("補正値適用クラス")] [ReadOnly]
         protected ICorrectionApplyModule m_applier;
         
+        [Inject]
         protected IObjectResolver m_resolver;
         
         public IReadOnlyList<ICorrectionInstance> Corrections => m_corrections;
-        
+
         public Action ReapplyEvent { get; set; }
 
-        [Inject]
-        public CorrectionManager(IObjectResolver resolver) {
-            m_resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
-
-            m_applier = resolver.Resolve<ICorrectionApplyModule>() ?? throw new ArgumentException();
+        public void Start() {
+            
+            m_applier = m_resolver.Resolve<ICorrectionApplyModule>();
+            
         }
 
         public void Dispose() {
