@@ -4,7 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GeneralModule.Spawner.Pattern.Encode {
-    [IncludeInSettings(true)]
     public static class ConditionModule {
         
         public static bool TargetInRange(List<System.Type> components, Vector3 pos, float range) {

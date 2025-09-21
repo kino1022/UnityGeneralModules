@@ -20,9 +20,13 @@ namespace GeneralModule.Status.Installer {
 
         public void Install(IContainerBuilder builder) {
 
-            builder.Register(m_intValueModule,Lifetime.Singleton).As<IValueModule<int>>();
+            builder
+                .Register<IntValueModule>(Lifetime.Transient)
+                .As<IValueModule<int>>();
             
-            builder.RegisterInstance(m_floatValueModule).As<IValueModule<float>>();
+            builder
+                .Register<FloatValueModule>(Lifetime.Transient)
+                .As<IValueModule<float>>();
             
         }
     }

@@ -30,6 +30,9 @@ namespace GeneralModule.Correction.Installer {
                 .RegisterInstance(m_provider)
                 .As<ICorrectionTypePropertyProvider>();
             
+            builder
+                .Register<CorrectionManager>(Lifetime.Transient)
+                .As<ICorrectionManager>();
         }
     }
 }
