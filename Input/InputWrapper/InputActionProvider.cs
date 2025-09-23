@@ -7,7 +7,7 @@ using VContainer;
 
 namespace GeneralModule.Input.InputWrapper{
     public class InputActionProvider : IInputActionProvider {
-        
+      
         private readonly PlayerInputActions m_actions;
 
         [Inject]
@@ -28,5 +28,6 @@ namespace GeneralModule.Input.InputWrapper{
         public IEnumerator<InputAction> GetEnumerator() => m_actions.GetEnumerator();
         
         IEnumerator IEnumerable.GetEnumerator() => m_actions.GetEnumerator();
+        
     }
 }

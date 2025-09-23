@@ -41,19 +41,19 @@ namespace GeneralModule.Input.Provider {
                         x => action.started += x,
                         x => action.started -= x
                     )
-                    .Select(ctx => new InputSignal(InputActionPhase.Started, ctx.ReadValueAsObject(),
+                    .Select(ctx => new InputSignal(InputActionPhase.Started, ctx.ReadValue<float>(),
                         Time.realtimeSinceStartupAsDouble));
 
             var performedStream = Observable.FromEvent<InputAction.CallbackContext>(
                     h => action.performed += h,
                     h => action.performed -= h)
-                .Select(ctx => new InputSignal(InputActionPhase.Performed, ctx.ReadValueAsObject(),
+                .Select(ctx => new InputSignal(InputActionPhase.Performed, ctx.ReadValue<float>(),
                     Time.realtimeSinceStartupAsDouble));
 
             var canceledStream = Observable.FromEvent<InputAction.CallbackContext>(
                     h => action.canceled += h,
                     h => action.canceled -= h)
-                .Select(ctx => new InputSignal(InputActionPhase.Canceled, ctx.ReadValueAsObject(),
+                .Select(ctx => new InputSignal(InputActionPhase.Canceled, ctx.ReadValue<float>(),
                     Time.realtimeSinceStartupAsDouble));
 
 
