@@ -85,15 +85,90 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public @PlayerInputActions()
     {
         asset = InputActionAsset.FromJson(@"{
-    ""version"": 0,
+    ""version"": 1,
     ""name"": ""PlayerInputActions"",
-    ""maps"": [],
+    ""maps"": [
+        {
+            ""name"": ""MockExvs"",
+            ""id"": ""6895691c-cb8d-4c46-9c52-983d97acd50d"",
+            ""actions"": [
+                {
+                    ""name"": ""Melee"",
+                    ""type"": ""Button"",
+                    ""id"": ""f319ffd9-e160-4f37-8889-7dae4c18c2b9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""5fb69079-13b3-4b19-9a0a-c5776233dbf3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Boost"",
+                    ""type"": ""Button"",
+                    ""id"": ""84e05aaf-5b09-48f7-ba23-f1e86bc630e1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a6002bcb-fba6-4248-aa43-bb589f9ef803"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Melee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec8cda5e-8425-4c13-8334-9770f51f1954"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8b30329-63fc-46e0-ae32-c750afe2bca7"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Boost"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        }
+    ],
     ""controlSchemes"": []
 }");
+        // MockExvs
+        m_MockExvs = asset.FindActionMap("MockExvs", throwIfNotFound: true);
+        m_MockExvs_Melee = m_MockExvs.FindAction("Melee", throwIfNotFound: true);
+        m_MockExvs_Shoot = m_MockExvs.FindAction("Shoot", throwIfNotFound: true);
+        m_MockExvs_Boost = m_MockExvs.FindAction("Boost", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
     {
+        UnityEngine.Debug.Assert(!m_MockExvs.enabled, "This will cause a leak and performance issues, PlayerInputActions.MockExvs.Disable() has not been called.");
     }
 
     /// <summary>
@@ -164,5 +239,152 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public int FindBinding(InputBinding bindingMask, out InputAction action)
     {
         return asset.FindBinding(bindingMask, out action);
+    }
+
+    // MockExvs
+    private readonly InputActionMap m_MockExvs;
+    private List<IMockExvsActions> m_MockExvsActionsCallbackInterfaces = new List<IMockExvsActions>();
+    private readonly InputAction m_MockExvs_Melee;
+    private readonly InputAction m_MockExvs_Shoot;
+    private readonly InputAction m_MockExvs_Boost;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "MockExvs".
+    /// </summary>
+    public struct MockExvsActions
+    {
+        private @PlayerInputActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public MockExvsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "MockExvs/Melee".
+        /// </summary>
+        public InputAction @Melee => m_Wrapper.m_MockExvs_Melee;
+        /// <summary>
+        /// Provides access to the underlying input action "MockExvs/Shoot".
+        /// </summary>
+        public InputAction @Shoot => m_Wrapper.m_MockExvs_Shoot;
+        /// <summary>
+        /// Provides access to the underlying input action "MockExvs/Boost".
+        /// </summary>
+        public InputAction @Boost => m_Wrapper.m_MockExvs_Boost;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_MockExvs; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="MockExvsActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(MockExvsActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="MockExvsActions" />
+        public void AddCallbacks(IMockExvsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MockExvsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MockExvsActionsCallbackInterfaces.Add(instance);
+            @Melee.started += instance.OnMelee;
+            @Melee.performed += instance.OnMelee;
+            @Melee.canceled += instance.OnMelee;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+            @Boost.started += instance.OnBoost;
+            @Boost.performed += instance.OnBoost;
+            @Boost.canceled += instance.OnBoost;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="MockExvsActions" />
+        private void UnregisterCallbacks(IMockExvsActions instance)
+        {
+            @Melee.started -= instance.OnMelee;
+            @Melee.performed -= instance.OnMelee;
+            @Melee.canceled -= instance.OnMelee;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+            @Boost.started -= instance.OnBoost;
+            @Boost.performed -= instance.OnBoost;
+            @Boost.canceled -= instance.OnBoost;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="MockExvsActions.UnregisterCallbacks(IMockExvsActions)" />.
+        /// </summary>
+        /// <seealso cref="MockExvsActions.UnregisterCallbacks(IMockExvsActions)" />
+        public void RemoveCallbacks(IMockExvsActions instance)
+        {
+            if (m_Wrapper.m_MockExvsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="MockExvsActions.AddCallbacks(IMockExvsActions)" />
+        /// <seealso cref="MockExvsActions.RemoveCallbacks(IMockExvsActions)" />
+        /// <seealso cref="MockExvsActions.UnregisterCallbacks(IMockExvsActions)" />
+        public void SetCallbacks(IMockExvsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MockExvsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MockExvsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="MockExvsActions" /> instance referencing this action map.
+    /// </summary>
+    public MockExvsActions @MockExvs => new MockExvsActions(this);
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "MockExvs" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="MockExvsActions.AddCallbacks(IMockExvsActions)" />
+    /// <seealso cref="MockExvsActions.RemoveCallbacks(IMockExvsActions)" />
+    public interface IMockExvsActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Melee" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMelee(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Shoot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShoot(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Boost" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnBoost(InputAction.CallbackContext context);
     }
 }

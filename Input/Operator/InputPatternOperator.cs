@@ -24,6 +24,11 @@ namespace GeneralModule.Input.Operator {
         }
         
         public static Observable<InputSignal[]> Tap(this Observable<InputSignal> source, int count, long interval) {
+            
+            if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+            
+            if (interval < 0) throw new ArgumentOutOfRangeException(nameof(interval));
+            
             return source
                 .OnPressed()
                 .Timestamp()
@@ -58,8 +63,11 @@ namespace GeneralModule.Input.Operator {
             //     .Select(s => s.Select(x => x.Phase == InputActionPhase.Started || x.Phase == InputActionPhase.Performed)
             //         .DistinctUntilChanged());
 
+            // 押されているかどうかの真偽値に変換
             var allStream = others
+                //渡されたObservableのリスト化処理
                 .Concat(new List<Observable<InputSignal>>(others.ToList()))
+                //boolへの変換処理
                 .Select(s => s
                     .FirstAsync()
                     .ToObservable()
@@ -71,7 +79,17 @@ namespace GeneralModule.Input.Operator {
                 .CombineLatest(allStream)
                 .Where(s => s.All(IsPressed => IsPressed))
                 .Select(_ => Unit.Default)
+                //実行間隔の制御のための待機処理
                 .ThrottleFirst(TimeSpan.FromMilliseconds(1));
+        }
+
+        public static Observable<int> TapOnCount(this Observable<InputSignal> sourse, int count, TimeSpan interval) {
+            var stream = sourse
+                .TimeInterval()
+                .Scan(0, (count, time) => time.Interval > interval ? 1 : count + 1);
+
+            return stream
+                .Debounce(interval);
         }
     }
 }

@@ -11,7 +11,7 @@ using VContainer.Unity;
 
 namespace GeneralModule.Input.Provider {
     [Serializable]
-    public class InputObservableProvider : IInputObservableProvider , IInitializable {
+    public class InputObservableProvider : IInputObservableProvider , IStartable {
 
         private readonly IInputActionProvider m_actions;
 
@@ -22,11 +22,12 @@ namespace GeneralModule.Input.Provider {
             m_actions = actions ?? throw new ArgumentNullException(nameof(actions));
         }
         
-        public void Initialize() {
+        public void Start() {
             m_actions.Enable();
         }
         
         public Observable<InputSignal> GetStream(InputAction action) {
+            
             if (action == null) return Observable.Empty<InputSignal>();
 
             // InputActionのIDをキーとしてキャッシュを検索
@@ -37,27 +38,35 @@ namespace GeneralModule.Input.Provider {
             }
 
             var startedStream =
-                Observable.FromEvent<InputAction.CallbackContext>(
+                Observable
+                    .FromEvent<InputAction.CallbackContext>(
                         x => action.started += x,
                         x => action.started -= x
                     )
-                    .Select(ctx => new InputSignal(InputActionPhase.Started, ctx.ReadValue<float>(),
-                        Time.realtimeSinceStartupAsDouble));
+                    .Select(ctx => new InputSignal(
+                        InputActionPhase.Started,
+                        ctx.ReadValue<float>(),
+                        Time.realtimeSinceStartupAsDouble)
+                    );
 
-            var performedStream = Observable.FromEvent<InputAction.CallbackContext>(
+            var performedStream = Observable
+                .FromEvent<InputAction.CallbackContext>(
                     h => action.performed += h,
-                    h => action.performed -= h)
-                .Select(ctx => new InputSignal(InputActionPhase.Performed, ctx.ReadValue<float>(),
-                    Time.realtimeSinceStartupAsDouble));
+                    h => action.performed -= h
+                )
+                .Select(ctx => new InputSignal(
+                    InputActionPhase.Performed,
+                    ctx.ReadValue<float>(),
+                    Time.realtimeSinceStartupAsDouble)
+                );
 
             var canceledStream = Observable.FromEvent<InputAction.CallbackContext>(
                     h => action.canceled += h,
-                    h => action.canceled -= h)
+                    h => action.canceled -= h
+                )
                 .Select(ctx => new InputSignal(InputActionPhase.Canceled, ctx.ReadValue<float>(),
                     Time.realtimeSinceStartupAsDouble));
 
-
-            // キャッシュにない場合は新しいストリームを生成
             var newStream = Observable
                 .Merge(startedStream, performedStream, canceledStream)
                 .Share();
@@ -72,7 +81,7 @@ namespace GeneralModule.Input.Provider {
             // actionReferenceがnullまたはactionが設定されていない場合は空のストリームを返す
             return actionReference?.action != null
                 ? GetStream(actionReference.action)
-                : Observable.Empty<InputSignal>();
+                : Observable.Empty<InputSignal>().Do(_ => Debug.Log($"{nameof(actionReference)}がnullでした"));
         }
     }
 }

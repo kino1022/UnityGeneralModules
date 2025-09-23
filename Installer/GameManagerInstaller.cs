@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using GeneralModule.Calculator.Installer;
 using GeneralModule.Correction.Definition.Type.Interface;
 using GeneralModule.Correction.Installer;
 using GeneralModule.Counter;
 using GeneralModule.Counter.Interface;
+using GeneralModule.Input.Installer;
 using GeneralModule.Status.Installer;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -15,17 +17,22 @@ namespace GeneralModule.Installer {
     /// <summary>
     /// 親スコープがレジスターするべき汎用クラスをインストールするインストーラー
     /// </summary>
-    public class GameManagerInstaller : SerializedScriptableObject, IInstaller {
+    [Serializable]
+    public class GameManagerInstaller : IInstaller {
         
 
         [OdinSerialize] private List<IInstaller> m_installers = new List<IInstaller>() {
             new CorrectionSystemInstaller(),
             new StatusSystemInstaller(),
-            new CalculatorInstaller()
+            new CalculatorInstaller(),
+            new InputSystemsInstaller()
         };
         
         public void Install(IContainerBuilder builder) {
-    
+
+            foreach (var installer in m_installers) {
+                installer.Install(builder);
+            }
         }
     }
 }
