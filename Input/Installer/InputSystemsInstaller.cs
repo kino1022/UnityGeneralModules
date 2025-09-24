@@ -18,7 +18,9 @@ namespace GeneralModule.Input.Installer {
 
         public void Install(IContainerBuilder builder) {
             
-            builder.RegisterInstance(m_playerActions).As<PlayerInputActions>();
+            builder
+                .RegisterInstance(m_playerActions)
+                .As<PlayerInputActions>();
             
             builder.Register<IInputActionProvider, InputActionProvider>(Lifetime.Singleton).As<IInputActionProvider>();
             
