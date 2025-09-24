@@ -4,6 +4,7 @@ using System.Linq;
 using GeneralModule.Input.Signal;
 using R3;
 using UnityEngine.InputSystem;
+using NUnit;
 
 namespace GeneralModule.Input.Operator {
     public static class InputPatternOperator {

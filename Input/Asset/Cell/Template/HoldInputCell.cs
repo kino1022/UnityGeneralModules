@@ -5,6 +5,7 @@ using UnityEngine;
 using R3;
 
 namespace GeneralModule.Input.Asset.Cell.Template {
+    [CreateAssetMenu(menuName = "GeneralModule/Input/Cell/Hold")]
     public class HoldInputCell : AInputContextCell {
 
         [TitleGroup("“ü—Í")]
