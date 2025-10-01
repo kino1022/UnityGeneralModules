@@ -8,30 +8,30 @@
             "actions": [
                 {
                     "name": "Melee",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "f319ffd9-e160-4f37-8889-7dae4c18c2b9",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Shoot",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "5fb69079-13b3-4b19-9a0a-c5776233dbf3",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Boost",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "84e05aaf-5b09-48f7-ba23-f1e86bc630e1",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Move",
