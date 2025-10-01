@@ -118,6 +118,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""4340b2ae-0a16-4d8e-af41-1279788c4eb4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -153,6 +162,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Boost"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1284ad6-0a40-4811-8fe7-7346cdc6a03c"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +184,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_MockExvs_Melee = m_MockExvs.FindAction("Melee", throwIfNotFound: true);
         m_MockExvs_Shoot = m_MockExvs.FindAction("Shoot", throwIfNotFound: true);
         m_MockExvs_Boost = m_MockExvs.FindAction("Boost", throwIfNotFound: true);
+        m_MockExvs_Move = m_MockExvs.FindAction("Move", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -247,6 +268,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_MockExvs_Melee;
     private readonly InputAction m_MockExvs_Shoot;
     private readonly InputAction m_MockExvs_Boost;
+    private readonly InputAction m_MockExvs_Move;
     /// <summary>
     /// Provides access to input actions defined in input action map "MockExvs".
     /// </summary>
@@ -270,6 +292,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "MockExvs/Boost".
         /// </summary>
         public InputAction @Boost => m_Wrapper.m_MockExvs_Boost;
+        /// <summary>
+        /// Provides access to the underlying input action "MockExvs/Move".
+        /// </summary>
+        public InputAction @Move => m_Wrapper.m_MockExvs_Move;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -305,6 +331,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Boost.started += instance.OnBoost;
             @Boost.performed += instance.OnBoost;
             @Boost.canceled += instance.OnBoost;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
         }
 
         /// <summary>
@@ -325,6 +354,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Boost.started -= instance.OnBoost;
             @Boost.performed -= instance.OnBoost;
             @Boost.canceled -= instance.OnBoost;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
         }
 
         /// <summary>
@@ -386,5 +418,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnBoost(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMove(InputAction.CallbackContext context);
     }
 }
