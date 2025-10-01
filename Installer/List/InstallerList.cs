@@ -14,10 +14,8 @@ namespace GeneralModule.Installer.List {
 
         public void Install(IContainerBuilder builder) {
 
-            m_installers.RemoveAll(x => x is null);
-
             m_installers.ForEach(x => {
-                x.Install(builder);
+                x?.Install(builder);
             });
         }
     }
