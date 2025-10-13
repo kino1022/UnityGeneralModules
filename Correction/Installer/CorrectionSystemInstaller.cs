@@ -6,6 +6,7 @@ using GeneralModule.Correction.Manager;
 using GeneralModule.Correction.Manager.Interface;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -17,7 +18,7 @@ namespace GeneralModule.Correction.Installer {
     public class CorrectionSystemInstaller : IInstaller {
 
         [OdinSerialize] 
-        protected ICorrectionTypePropertyProvider m_provider = SerializedScriptableObject.CreateInstance<CorrectionTypePropertyProvider>();
+        protected ICorrectionTypePropertyProvider m_provider = ScriptableObject.CreateInstance<CorrectionTypePropertyProvider>();
         
 
         public void Install (IContainerBuilder builder) {

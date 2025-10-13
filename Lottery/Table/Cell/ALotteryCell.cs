@@ -5,7 +5,8 @@ using Sirenix.Serialization;
 using UnityEngine;
 
 namespace GeneralModule.Lottery.Table.Cell {
-    public abstract class ALotteryCell<Type> : ILotteryCell<Type> {
+    [Serializable]
+    public class LotteryCell<Type> : ILotteryCell<Type> {
 
         [OdinSerialize, LabelText("抽選アイテム")]
         protected Type m_item;
@@ -16,6 +17,8 @@ namespace GeneralModule.Lottery.Table.Cell {
         public Type Item => m_item;
 
         public float Rate => m_rate;
+
+        public LotteryCell() { }
 
         public void SetRate(float value) {
             
