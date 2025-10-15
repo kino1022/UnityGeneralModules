@@ -12,6 +12,9 @@ namespace GeneralModule.Amount {
         [OdinSerialize]
         protected ReactiveProperty<int> m_amount;
         
+        [ShowInInspector]
+        private int CurrentAmount => m_amount.Value;
+        
         public ReadOnlyReactiveProperty<int> Amount => m_amount;
 
         public AmountModule(int amount) {
