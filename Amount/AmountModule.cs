@@ -49,7 +49,7 @@ namespace GeneralModule.Amount {
         [Button("値の減少"), ProgressBar(0,100)]
         public void Decrease(int amount) {
 
-            if (amount > 0) {
+            if (amount <= 0) {
                 throw new System.ArgumentOutOfRangeException();
             }
             
