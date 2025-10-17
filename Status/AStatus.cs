@@ -23,7 +23,7 @@ namespace GeneralModule.Status {
             m_resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
         }
 
-        public virtual void Start() {
+        protected virtual void Start() {
             
             m_rawValue = m_resolver.Resolve<IValueModule<Type>>();
             
