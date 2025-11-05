@@ -1,7 +1,4 @@
-using GeneralModule.Installer.List;
-using GeneralModule.Installer.List.Interface;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -9,6 +6,10 @@ using VContainer.Unity;
 namespace GeneralModule.Scope {
     
     public class ListableLifetimeScope : LifetimeScope {
+        
+        [SerializeField]
+        [LabelText("MonoInstaller自動取得")]
+        private bool m_autoFindInstallers = true;
 
         [SerializeField, LabelText("インストーラーのリスト")]
         protected InstallerList m_list;
@@ -18,6 +19,21 @@ namespace GeneralModule.Scope {
 
             if (m_list is null) {
                 return;
+            }
+            
+            if (m_autoFindInstallers) {
+                
+                var installers = transform.root.gameObject.GetComponentsInChildren<IInstaller>();
+
+                if (installers.Length > 0) {
+                    foreach (var installer in installers) {
+                        if (installer is InstallerList) {
+                            continue;
+                        }
+
+                        installer.Install(builder);
+                    }
+                }
             }
             
             m_list.Install(builder);
